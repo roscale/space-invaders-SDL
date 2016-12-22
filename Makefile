@@ -1,9 +1,9 @@
-OBJS = main.cpp Ship.cpp Bullet.cpp Alien.cpp AlienSquad.cpp
+OBJS = main.cpp Ship.cpp Bullet.cpp BulletManager.cpp Alien.cpp AlienSquad.cpp
 
 CC = g++
 COMPILER_FLAGS = -w -std=c++17 -Iheaders/
 
-LINKER_FLAGS = -lSDL2 -lSDL2_image -lSDL2pp
+LINKER_FLAGS = -lSDL2 -lSDL2pp
 
 OBJ_NAME = game.out
 

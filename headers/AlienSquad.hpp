@@ -6,9 +6,9 @@
 class AlienSquad
 {
 public:
-	AlienSquad();
-	std::vector<Alien> squad;
+	static void initSquad();
+	static std::vector<Alien> squad;
 
-	void move();
-	void draw();
+	static void move();
+	static void draw();
 };

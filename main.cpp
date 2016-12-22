@@ -1,5 +1,3 @@
-#define SDL2PP_WITH_IMAGE
-
 #include <SDL2pp/SDL2pp.hh>
 #include <SDL2/SDL_image.h>
 #include "globals.hpp"
@@ -7,6 +5,7 @@
 #include <vector>
 #include "Alien.hpp"
 #include "AlienSquad.hpp"
+#include "BulletManager.hpp"
 
 using namespace SDL2pp;
 
@@ -14,11 +13,12 @@ SDL sdl(SDL_INIT_VIDEO);
 Window gWindow("Space Invaders", SDL_WINDOWPOS_CENTERED, SDL_WINDOWPOS_CENTERED, 800, 600, SDL_WINDOW_SHOWN);
 Renderer gRenderer(gWindow, -1, SDL_RENDERER_ACCELERATED);
 
-Ship ship;
-AlienSquad alienSquad;
-
 int main()
 {
+	// Game init
+	Ship ship;
+	AlienSquad::initSquad();
+
 	while (true)
 	{
 		SDL_Event e;
@@ -49,37 +49,13 @@ int main()
 		gRenderer.SetDrawColor(0, 0, 0);
 		gRenderer.Clear();
 
-		// Bullets
-		for (int i = 0; i < ship.bullets.size(); i++)
-		{
-			ship.bullets[i].move();
-
-			// On screen check
-			if (ship.bullets[i].getPos().y < 0)
-			{
-				ship.bullets.erase(ship.bullets.begin() + i);
-				continue;
-			}
-
-			// Alien hit check
-			for (int j = 0; j < alienSquad.squad.size(); j++)
-				if (ship.bullets[i].hits(alienSquad.squad[j]))
-				{
-					ship.bullets.erase(ship.bullets.begin() + i);
-					alienSquad.squad.erase(alienSquad.squad.begin() + j);
-				}
-
-			#include <iostream>
-			std::cout << "Bullet: " << ship.bullets[i].getPos() << '\n' << std::flush;
-		}
 		ship.move();
-		alienSquad.move();
+		AlienSquad::move();
+		BulletManager::update();
 
-
-		for (const auto &bullet : ship.bullets)
-			bullet.draw();
+		BulletManager::draw();
 		ship.draw();
-		alienSquad.draw();
+		AlienSquad::draw();
 
 		gRenderer.Present();
 		SDL_Delay(10);

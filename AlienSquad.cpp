@@ -3,17 +3,21 @@
 #include "globals.hpp"
 #include <SDL2pp/SDL2pp.hh>
 
-AlienSquad::AlienSquad()
+using namespace SDL2pp;
+
+std::vector<Alien> AlienSquad::squad;
+
+void AlienSquad::initSquad()
 {
 	// I should've used static members :(
-	Alien refAlien(SDL2pp::Point{-100, -100});
+	Alien refAlien(Point{-100, -100});
 
 	const int xMargin = 20;
 	const int yMargin = 20;
 
 	for (int col = 0; col < gWindow.GetWidth() - 2*(refAlien.size.x + 20); col+=(refAlien.size.x + 20))
 		for (int row = 0; row < 3*(refAlien.size.y + 20); row+=(refAlien.size.y + 20))
-			squad.push_back(Alien{SDL2pp::Point{ col, row }});
+			squad.push_back(Alien{ Point{ col, row } });
 }
 
 void AlienSquad::move()

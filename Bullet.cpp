@@ -3,12 +3,14 @@
 #include <SDL2pp/SDL2pp.hh>
 #include "Alien.hpp"
 
+using namespace SDL2pp;
+
 void Bullet::move() { pos.y += dir; }
 
 bool Bullet::hits(const Alien &alien) const
 {
-	SDL2pp::Rect bulletRect = { pos, size };
-	SDL2pp::Rect alienRect = { alien.pos, alien.size };
+	Rect bulletRect = { pos, size };
+	Rect alienRect = { alien.pos, alien.size };
 	return bulletRect.Intersects(alienRect);
 }
 
@@ -18,7 +20,7 @@ void Bullet::draw() const
 	gRenderer.FillRect(pos, pos+size);
 }
 
-SDL2pp::Point Bullet::getPos() const
+Point Bullet::getPos() const
 {
 	return pos;
 }
