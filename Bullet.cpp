@@ -5,22 +5,28 @@
 
 using namespace SDL2pp;
 
-void Bullet::move() { pos.y += dir; }
-
-bool Bullet::hits(const Alien &alien) const
+Bullet::Bullet(Vector2D startPos, Vector2D startVel, bool isEnemy)
 {
-	Rect bulletRect = { pos, size };
-	Rect alienRect = { alien.pos, alien.size };
-	return bulletRect.Intersects(alienRect);
+	pos.x = startPos.x;
+	pos.y = startPos.y;
+	vel = startVel;
+	enemyBullet = isEnemy;
 }
+
+void Bullet::update() { pos += vel; }
+
+bool Bullet::isOffscreen()
+{
+	Rect rect{ pos.x, pos.y, size.x, size.y };
+	return (rect.x < 0 || rect.x > gWindow.GetWidth() || rect.y < 0 || rect.y > gWindow.GetHeight());
+}
+
+bool Bullet::isEnemyBullet() { return enemyBullet; }
 
 void Bullet::draw() const
 {
 	gRenderer.SetDrawColor(255, 255, 255);
-	gRenderer.FillRect(pos, pos+size);
-}
 
-Point Bullet::getPos() const
-{
-	return pos;
+	Rect renderRect{ pos.x, pos.y, size.x, size.y };
+	gRenderer.FillRect(renderRect);
 }

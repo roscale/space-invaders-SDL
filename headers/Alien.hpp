@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL2pp/SDL2pp.hh>
 #include "globals.hpp"
+#include "Vector2D.hpp"
 
 using namespace SDL2pp;
 
@@ -9,16 +10,17 @@ class Alien
 private:
 	Texture sprite{ gRenderer, "resources/alien.png" };
 
-	Point pos;
-	Point size{ sprite.GetWidth(), sprite.GetHeight() };
-	double dir = 1;
+	Vector2D pos = {-1, -1};
+	Vector2D size = { sprite.GetWidth(), sprite.GetHeight() };
+	Vector2D vel = {25, 0};
 
 public:
-	Alien(Point startPos) { pos = startPos; }
+	Alien(Vector2D startPos);
 
-	void move();
+	void update();
+	void shoot();
 	void draw();
 
+	friend class BulletManager;
 	friend class AlienSquad;
-	friend class Bullet;
 };

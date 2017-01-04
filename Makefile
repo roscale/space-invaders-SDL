@@ -1,4 +1,4 @@
-OBJS = main.cpp Ship.cpp Bullet.cpp BulletManager.cpp Alien.cpp AlienSquad.cpp
+OBJS = main.cpp Vector2D.cpp Timer.cpp Ship.cpp Bullet.cpp BulletManager.cpp Alien.cpp AlienSquad.cpp
 
 CC = g++
 COMPILER_FLAGS = -w -std=c++17 -Iheaders/

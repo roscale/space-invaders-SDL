@@ -11,7 +11,7 @@ private:
 	static std::vector<Bullet> bullets;
 
 public:
-	static void addBullet(Point startPos, int startDir);
+	static void addBullet(Bullet bullet);
 	static void update();
 	static void draw();
 };

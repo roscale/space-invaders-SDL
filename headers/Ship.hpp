@@ -1,7 +1,7 @@
 #pragma once
 #include <SDL2pp/SDL2pp.hh>
 #include "globals.hpp"
-#include <vector>
+#include "Vector2D.hpp"
 #include "Bullet.hpp"
 
 using namespace SDL2pp;
@@ -11,16 +11,18 @@ class Ship
 private:
 	Texture sprite{ gRenderer, "resources/ship.png" };
 
-	Point pos{ gWindow.GetWidth() / 2, gWindow.GetHeight() - sprite.GetHeight() };
-	Point size{ sprite.GetWidth(), sprite.GetHeight() };
-	int dir = 0;
+	// Use Vector2D !! Eigen maybe or better internet copied code
+	// PS: Nope, I made one myself :P
+
+	Vector2D pos = { gWindow.GetWidth() / 2, gWindow.GetHeight() - sprite.GetHeight()};
+	Vector2D size = { sprite.GetWidth(), sprite.GetHeight() };
+	Vector2D dir;
 
 public:
-	// std::vector<Bullet> bullets;
 	Ship() {}
 
-	void setDir(int newDir);
-	void move();
+	void setDir(Vector2D newDir);
+	void update();
 	void shoot();
 	void draw();
 };

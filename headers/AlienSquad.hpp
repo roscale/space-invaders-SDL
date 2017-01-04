@@ -9,6 +9,7 @@ public:
 	static void initSquad();
 	static std::vector<Alien> squad;
 
-	static void move();
+	static void update();
+	static void randomShoot();
 	static void draw();
 };

@@ -1,17 +1,16 @@
 #include "Ship.hpp"
 #include "globals.hpp"
 #include <SDL2pp/SDL2pp.hh>
-#include <vector>
 #include "Bullet.hpp"
 #include "BulletManager.hpp"
 
 using namespace SDL2pp;
 
-void Ship::setDir(int newDir) { dir = newDir; }
+void Ship::setDir(Vector2D newDir) { dir = newDir; }
 
-void Ship::move()
+void Ship::update()
 {
-	pos.x += dir;
+	pos += (dir * gTimer.get_ticks() / 1000.0f );
 
 	// Clapping sprite on window
 	if (pos.x < 0)
@@ -23,11 +22,12 @@ void Ship::move()
 void Ship::shoot()
 {
 	// At the half of the ship
-	Point bulletPos = { pos.x + size.x/2-3, pos.y };
-	BulletManager::addBullet(bulletPos, -10);
+	Vector2D bulletPos = { pos.x + size.x / 2 - 3, pos.y };
+	BulletManager::addBullet(Bullet{bulletPos, Vector2D{0, -10}, false});
 }
 
 void Ship::draw()
 {
-	gRenderer.Copy(sprite, NullOpt, pos);
+	Rect renderRect{ pos.x, pos.y, size.x, size.y };
+	gRenderer.Copy(sprite, NullOpt, renderRect);
 }
